@@ -667,12 +667,9 @@ export default function App() {
                             <span>{studentAnswer.split(/\s+/).filter(Boolean).length} words</span>
                           </div>
                           <div className="grid min-h-[420px] grid-cols-[64px_1fr] font-mono">
-                            {/* Line numbers */}
                             <pre className="select-none border-r border-slate-800 bg-slate-900 px-3 py-4 text-right text-xs leading-6 text-slate-500">
                               {lineNumbers(studentAnswer)}
                             </pre>
-
-                            {/* Code editor */}
                             <Textarea
                               ref={textareaRef}
                               value={studentAnswer}
@@ -680,7 +677,7 @@ export default function App() {
                               onKeyDown={handleEditorKeyDown}
                               spellCheck={false}
                               className="min-h-[420px] resize-none border-0 bg-slate-950 px-4 py-4 font-mono text-sm leading-6 text-slate-100 focus-visible:ring-0"
-                              placeholder="1  DECLARE Number : INTEGER
+                              placeholder={`1  DECLARE Number : INTEGER
 2  DECLARE Total : INTEGER
 3  Total ← 0
 4  FOR Counter ← 1 TO 5
@@ -689,7 +686,7 @@ export default function App() {
 7  NEXT Counter
 8  OUTPUT Total
 
-Write your pseudocode here..."
+Write your pseudocode here...`}
                             />
                           </div>
                         </div>
@@ -733,13 +730,14 @@ Write your pseudocode here..."
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <p className="text-sm text-slate-400">This area estimates what your pseudocode would do using sample inputs.
-                        </p>
+                        <p className="text-sm text-slate-400">This area estimates what your pseudocode would do using sample inputs.</p>
+                        <div className="rounded-2xl border border-slate-800 bg-slate-950 p-4">
                           <div className="mb-3 flex items-center justify-between">
                             <span className="text-sm font-semibold text-slate-200">Status</span>
                             <Badge variant="secondary">{runPreview.status}</Badge>
                           </div>
-                          <div className="rounded-xl border border-slate-800 bg-black p-4 font-mono text-sm text-emerald-300">((line, index) => (
+                          <div className="rounded-xl border border-slate-800 bg-black p-4 font-mono text-sm text-emerald-300">
+                            {runPreview.output.map((line, index) => (
                               <div key={index}>{line}</div>
                             ))}
                           </div>
@@ -759,6 +757,7 @@ Write your pseudocode here..."
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
+                        <p className="text-sm text-slate-400">Your score updates from the mark points the app detects in your answer.</p>
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-slate-400">Score</span>
                           <span className="text-3xl font-bold text-white">{result.rawScore}/{result.total}</span>
@@ -897,8 +896,4 @@ Write your pseudocode here..."
                       </div>
                       <div className="rounded-2xl border border-emerald-900 bg-emerald-950/30 p-4">
                         <div className="mb-2 text-sm font-semibold text-emerald-300">Model answer</div>
-                        <pre className="whitespace-pre-wrap font-mono text-sm leading-6 text-emerald-100">{currentQuestion.modelAnswer}</pre>
-                      </div>
-                    </CardContent>
-                  </Card>
- 
+                        <pre className="whitespace-pre-wrap font-mono 
